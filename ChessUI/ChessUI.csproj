@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\blackBishop.png" />
+    <None Remove="Assets\blackKing.png" />
+    <None Remove="Assets\blackKnight.png" />
+    <None Remove="Assets\blackPawn.png" />
+    <None Remove="Assets\blackQueen.png" />
+    <None Remove="Assets\blackRook.png" />
+    <None Remove="Assets\chessboard.png" />
+    <None Remove="Assets\whiteBishop.png" />
+    <None Remove="Assets\whiteKing.png" />
+    <None Remove="Assets\whiteKnight.png" />
+    <None Remove="Assets\whitePawn.png" />
+    <None Remove="Assets\whiteQueen.png" />
+    <None Remove="Assets\whiteRook.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChessLogic\ChessLogic.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\blackBishop.png" />
+    <Resource Include="Assets\blackKing.png" />
+    <Resource Include="Assets\blackKnight.png" />
+    <Resource Include="Assets\blackPawn.png" />
+    <Resource Include="Assets\blackQueen.png" />
+    <Resource Include="Assets\blackRook.png" />
+    <Resource Include="Assets\chessboard.png" />
+    <Resource Include="Assets\whiteBishop.png" />
+    <Resource Include="Assets\whiteKing.png" />
+    <Resource Include="Assets\whiteKnight.png" />
+    <Resource Include="Assets\whitePawn.png" />
+    <Resource Include="Assets\whiteQueen.png" />
+    <Resource Include="Assets\whiteRook.png" />
+  </ItemGroup>
+
+</Project>
