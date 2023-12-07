@@ -31,7 +31,7 @@ namespace ChessUI
 
         private void IntializeBoard()
         {
-            for (int r = 0; r < 0; r++)
+            for (int r = 0; r < 8; r++)
             {
                 for (int c = 0; c < 8; c++)
                 {

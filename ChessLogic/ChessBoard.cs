@@ -27,11 +27,11 @@ namespace ChessLogic
         public static ChessBoard Initial()
         {
             ChessBoard board = new ChessBoard();
-            board.AddBeginingPieces();
+            board.AddStartPieces();
             return board;
         }
 
-        private void AddBeginingPieces()
+        private void AddStartPieces()
         {
             // Adding pieces (except pawns) to the board
             this[0, 0] = new Rook(Player.black);
@@ -60,7 +60,7 @@ namespace ChessLogic
             }
         }
 
-        public static bool IsInsideParameters(Position pos)
+        public static bool IsInside(Position pos)
         {
             return pos.Row >= 0 && pos.Row < 8 && pos.Column >= 0 && pos.Column < 8;
         }

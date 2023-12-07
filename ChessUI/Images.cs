@@ -15,7 +15,7 @@ namespace ChessUI
         {
             { PieceType.Pawn, Load("Assets/whitePawn.png") },
             { PieceType.Rook, Load("Assets/whiteRook.png") },
-            { PieceType.Knight, Load("Assets/whiteKnight") },
+            { PieceType.Knight, Load("Assets/whiteKnight.png") },
             { PieceType.Bishop, Load("Assets/whiteBishop.png") },
             { PieceType.Queen, Load("Assets/whiteQueen.png") },
             { PieceType.King, Load("Assets/whiteKing.png") }
@@ -25,7 +25,7 @@ namespace ChessUI
         {
             { PieceType.Pawn, Load("Assets/blackPawn.png") },
             { PieceType.Rook, Load("Assets/blackRook.png") },
-            { PieceType.Knight, Load("Assets/blackKnight") },
+            { PieceType.Knight, Load("Assets/blackKnight.png") },
             { PieceType.Bishop, Load("Assets/blackBishop.png") },
             { PieceType.Queen, Load("Assets/blackQueen.png") },
             { PieceType.King, Load("Assets/blackKing.png") }
