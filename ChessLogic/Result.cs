@@ -17,7 +17,7 @@ namespace ChessLogic
             Reason = reason;
         }
 
-        //Types of ending for the game...Checkmate and Draw
+        //Reason for end of game...Checkmate or Draw
         public static Result Win (Player winner)
         {
             return new Result(winner, Ending.Checkmate);

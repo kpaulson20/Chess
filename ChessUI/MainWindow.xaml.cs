@@ -63,6 +63,11 @@ namespace ChessUI
 
         private void BoardGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (MenuOnScreen())
+            {
+                return;
+            }
+
             Point point = e.GetPosition(BoardGrid);
             Position pos = ToSquareSpot(point);
 
@@ -110,6 +115,11 @@ namespace ChessUI
         {
             status.MakeMove(move);
             displayBoard(status.Board);
+
+            if (status.IsOver())
+            {
+                displayEndOfGame();
+            }
         }
 
         private void CacheMoves(IEnumerable<Move> moves)
@@ -122,7 +132,7 @@ namespace ChessUI
         }
         private void displayHighlights()
         {
-            Color color = Color.FromArgb(120, 0, 0, 255);
+            Color color = Color.FromArgb(150, 125, 225, 125);
 
             foreach(Position to in moveCache.Keys)
             {
@@ -136,6 +146,41 @@ namespace ChessUI
             {
                 highlights[to.Row, to.Column].Fill = Brushes.Transparent;
             }
+        }
+
+        private bool MenuOnScreen()
+        {
+            return Menu.Content != null;
+        }
+
+        private void displayEndOfGame()
+        {
+            EndMenu endMenu = new EndMenu(status);
+            Menu.Content = endMenu;
+
+            //handle user click on end or restart
+            endMenu.SelectedOption += option =>
+            {
+                //start a new game
+                if (option == Option.Restart)
+                {
+                    Menu.Content = null;
+                    RestartGame();
+                }
+                //close the game in its entirety
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+            };
+        }
+
+        private void RestartGame()
+        {
+            removeHighlights();
+            moveCache.Clear();
+            status = new Status(Player.white, ChessBoard.Initial());
+            displayBoard(status.Board);
         }
     }
 }

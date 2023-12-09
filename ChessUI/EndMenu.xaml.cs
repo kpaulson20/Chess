@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessLogic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,54 @@ namespace ChessUI
     /// </summary>
     public partial class EndMenu : UserControl
     {
-        public EndMenu()
+        public event Action<Option> SelectedOption;
+        public EndMenu(Status status)
         {
             InitializeComponent();
+
+            Result result = status.result;
+            WinnerText.Text = getWinnerText(result.Winner);
+            ReasonText.Text = ExplainationText(result.Reason, status.CPlayer);
+        }
+
+        private static string getWinnerText(Player Winner)
+        {
+            return Winner switch
+            {
+                Player.white => "WHITE WINS",
+                Player.black => "BLACK WINS",
+                _ => "DRAW"
+            };
+        }
+
+        private static string PlayerName(Player player)
+        {
+            return player switch
+            {
+                Player.white => "WHITE",
+                Player.black => "BLACK",
+                _ => ""
+            };
+        }
+
+        private static string ExplainationText(Ending reason, Player CPlayer)
+        {
+            return reason switch
+            {
+                Ending.Stalemate => $"STALEMATE: {PlayerName(CPlayer)} CANNOT MOVE",
+                Ending.Checkmate => $"CHECKMATE: {PlayerName(CPlayer)} WINS",
+                _ => ""
+            };
+        }
+
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedOption?.Invoke(Option.Restart);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedOption?.Invoke(Option.Exit);
         }
     }
 }
