@@ -13,5 +13,13 @@ namespace ChessLogic
         public abstract Position To { get; }
 
         public abstract void Excecute(ChessBoard board);
+
+        public virtual bool MoveIsLegal(ChessBoard board)
+        {
+            Player player = board[From].Color;
+            ChessBoard boardCopy = board.Copy();
+            Excecute(boardCopy);
+            return !boardCopy.IsInCheck(player);
+        }
     }
 }

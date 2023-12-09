@@ -38,8 +38,17 @@ namespace ChessLogic
 
         protected IEnumerable<Position>MoveInDirection(Position from, ChessBoard board, Direction[] dirs)
         {
-            //find all reachable positions for the given piece
+            //find all reachable positions for the chosen piece
             return dirs.SelectMany (dir => MoveInDirection(from, board, dirs));
+        }
+
+        public virtual bool PossibleKingCapture(Position from, ChessBoard board)
+        {
+            return getMoves(from, board).Any(move =>
+            {
+                Piece piece = board[move.To];
+                return piece != null && piece.Type == PieceType.King;
+            });
         }
     }
 }

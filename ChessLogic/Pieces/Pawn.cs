@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -84,5 +85,16 @@ namespace ChessLogic
         {
             return Forward(from, board).Concat(Diagonal(from, board));
         }
+
+        public override bool PossibleKingCapture (Position from, ChessBoard board)
+        {
+            return Diagonal(from, board).Any(move =>
+            {
+                Piece piece = board[move.To];
+                return piece != null && piece.Type == PieceType.King;
+            });
+        }
+
+
     }
 }

@@ -23,26 +23,27 @@ namespace ChessLogic
             return copy;
         }
 
-        private static IEnumerable<Position>PotentialMoves(Direction from)
+        private static IEnumerable<Position> PotentialMoves(Position from)
         {
-            foreach(Direction vDir in new Direction[] {Direction.Up, Direction.Down})
+            foreach(Direction vertical in new Direction[] {Direction.Up, Direction.Down})
             {
-                foreach (Direction hDir in new Direction[] {Direction.Left, Direction.Right})
+                foreach (Direction height in new Direction[] {Direction.Left, Direction.Right})
                 {
-                    yield return from + 2 * vDir + hDir;
-                    yield return from + 2 * hDir + vDir;
+                    yield return from + 2 * vertical + height;
+                    yield return from + 2 * height + vertical;
                 }
             }
         }
 
         private IEnumerable<Position>MovePositions(Position from, ChessBoard board)
         {
-            return PotentialMoves(from).Where(pos => ChessBoard.IsInside(pos) && (board.IsEmpty(pos) || board[pos].Color != Color));
+            return PotentialMoves(from).Where(pos => ChessBoard.IsInside(pos) 
+                && (board.IsEmpty(pos) || board[pos].Color != Color));
         }
 
         public override IEnumerable<Move> getMoves(Position from, ChessBoard board)
         {
-            return MovePositions(from, board).Select(to = new Normal(from, to));
+            return MovePositions(from, board).Select(to => new Normal(from, to));
         }
     }
 }

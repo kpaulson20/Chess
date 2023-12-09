@@ -69,5 +69,47 @@ namespace ChessLogic
         {
             return this[pos] == null;
         }
+
+        //Detecting check process
+        //get and return all non-empty board positions
+        public IEnumerable<Position> PiecePositions()
+        {
+            for (int r = 0; r < 8; r++)
+            {
+                for (int c = 0; c < 8; c++)
+                {
+                    Position pos = new Position (r, c);
+                    if (!IsEmpty(pos))
+                    {
+                        yield return pos;
+                    }
+                }
+            }
+        }
+
+        //get all positions of one color
+        public IEnumerable<Position> PositionForColor (Player player)
+        {
+            return PiecePositions().Where(pos => this[pos].Color == player);
+        }
+
+        public bool IsInCheck(Player player)
+        {
+            return PositionForColor(player.Opponent()).Any(pos =>
+            {
+                Piece piece = this[pos];
+                return piece.PossibleKingCapture(pos, this);
+            });
+        }
+
+        public ChessBoard Copy()
+        {
+            ChessBoard copy = new ChessBoard();
+            foreach (Position pos in PiecePositions())
+            {
+                copy[pos] = this[pos].Copy();
+            }
+            return copy;
+        }
     }
 }
