@@ -50,13 +50,32 @@ namespace ChessLogic
             return board[pos].Color != Color;
         }
 
+        //Promotion
+        private static IEnumerable<Move> PromotionMoves(Position from, Position to)
+        {
+            yield return new Promotion(from, to, PieceType.Knight);
+            yield return new Promotion(from, to, PieceType.Bishop);
+            yield return new Promotion(from, to, PieceType.Rook);
+            yield return new Promotion(from, to, PieceType.Queen);
+        }
+
         //forward moves for pawns
         private IEnumerable<Move>Forward(Position from, ChessBoard board)
         {
             Position oneSquare = from + forward;
              if (CanMove(oneSquare, board))
              {
-                yield return new Normal(from, oneSquare);
+                if(oneSquare.Row == 0 || oneSquare.Row == 7)
+                {
+                    foreach(Move pMove in PromotionMoves(from, oneSquare))
+                    {
+                        yield return pMove;
+                    }
+                }
+                else
+                {
+                    yield return new Normal(from, oneSquare);
+                }
 
                 Position twoSquares = oneSquare + forward;
 
@@ -76,7 +95,17 @@ namespace ChessLogic
 
                 if(CanCapture(to, board))
                 {
-                    yield return new Normal(from, to);
+                    if (to.Row == 0 || to.Row == 7)
+                    {
+                        foreach (Move pMove in PromotionMoves(from, to))
+                        {
+                            yield return pMove;
+                        }
+                    }
+                    else
+                    {
+                        yield return new Normal(from, to);
+                    }
                 }
             }
         }

@@ -107,8 +107,31 @@ namespace ChessUI
 
             if (moveCache.TryGetValue(pos,out Move move))
             {
-                HandleMove(move);
+                if (move.Type == MoveType.pawnPromote)
+                {
+                    HandlePromotion(move.From, move.To);
+                }
+                else
+                {
+                    HandleMove(move);
+                }
             }
+        }
+
+        private void HandlePromotion(Position from, Position to)
+        {
+            pieces[to.Row, to.Column].Source = Images.getImage(status.CPlayer, PieceType.Pawn);
+            pieces[from.Row, from.Column].Source = null;
+
+            PromoteMenu promoMenu = new PromoteMenu(status.CPlayer);
+            Menu.Content = promoMenu;
+
+            promoMenu.UpgradePiece += type =>
+            {
+                Menu.Content = null;
+                Move promoMove = new Promotion(from, to, type);
+                HandleMove(promoMove);
+            };
         }
 
         private void HandleMove(Move move)
@@ -177,10 +200,35 @@ namespace ChessUI
 
         private void RestartGame()
         {
+            chooseMove = null;
             removeHighlights();
             moveCache.Clear();
             status = new Status(Player.white, ChessBoard.Initial());
             displayBoard(status.Board);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!MenuOnScreen() && e.Key == Key.Escape)
+            {
+                DisplayPauseMenu();
+            }
+        }
+
+        private void DisplayPauseMenu()
+        {
+            PauseMenu pauseMenu = new PauseMenu();
+            Menu.Content = pauseMenu;
+
+            pauseMenu.Select += Option =>
+            {
+                Menu.Content = null;
+
+                if (Option == Option.Restart) 
+                { 
+                    RestartGame(); 
+                }
+            };
         }
     }
 }
