@@ -35,8 +35,8 @@ namespace ChessUI
         {
             return Winner switch
             {
-                Player.white => "WHITE WINS",
-                Player.black => "BLACK WINS",
+                Player.white => "GAME OVER",
+                Player.black => "GAME OVER",
                 _ => "DRAW"
             };
         }
